@@ -1,0 +1,5 @@
+# Esto evitara que los modulos locales y registros se copien en la imagen de Docker y posiblemente
+# sobrescriban los módulos instalados dentro del Dockerfile
+
+node_modules
+npm-debug.log

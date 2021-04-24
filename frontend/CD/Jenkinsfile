@@ -1,0 +1,25 @@
+node {
+  step([$class: 'WsCleanup'])
+
+
+  stage('Checkout aditional repo') {
+    dir('CM') {
+      git branch: 'master', url:"https://github.com/ManuelCoral1998/Ansible-Class.git"
+    }
+  }
+
+  stage('Execute deployment with ansible') {
+    dir('CM') {
+      sh """
+        sudo ansible-playbook -i inventory/aws_ec2.yaml \
+        -l tag_Name_tf_instance_front_icesi_health \
+        site.yml \
+        --private-key="${env.pemPath}" \
+        -u ubuntu -vvv \
+        -e tag=${params.TAG} \
+        -e back_host=localhost
+      """
+    }
+  }
+
+}
