@@ -1,5 +1,5 @@
 node {
-  def frontendImage
+  def CIPipeline
 
   step([$class: 'WsCleanup'])
   
@@ -32,7 +32,7 @@ node {
 
   stage("Build frontend image"){
     dir('frontend') {
-      frontendImage = docker.build('manuel11coral23/frontend')
+      frontendImage = docker.build('douglaslopezmena/frontend')
     }
   }
 
@@ -43,7 +43,13 @@ node {
   }
 
   stage("Removing unnecessary images"){
-    sh 'docker image prune -a -f --filter "label!=manuel11coral23/frontend"'
+    sh 'docker image prune -a -f --filter "label!=douglaslopezmena/frontend"'
+  }
+
+  stage("Trigger CD") {
+    build job: 'CD', parameters: [
+      string(name: 'TAG', value: "$BUILD_NUMBER")
+    ]
   }
 
 }
