@@ -26,7 +26,7 @@ node {
   } catch (e) {
 
   } finally {
-    junit '**/frontend/test-results.xml'
+    junit 'allowEmptyResults: true, **/frontend/*.xml'
   }
   
 
