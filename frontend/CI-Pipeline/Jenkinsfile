@@ -47,7 +47,7 @@ node {
   }
 
   stage("Trigger CD") {
-    build job: 'CD', parameters: [
+    build job: 'CD-pipe', parameters: [
       string(name: 'TAG', value: "$BUILD_NUMBER")
     ]
   }
